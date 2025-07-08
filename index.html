@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Turn Tracker</title>
+  <style>
+    body { font-family: sans-serif; margin: 1em; }
+    #nameList div { display: flex; align-items: center; margin-bottom: 4px; }
+    #nameList button { margin-left: 5px; }
+    #bigButton {
+      font-size: 4em;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="setup">
+  <input id="nameInput" placeholder="Enter name">
+  <button onclick="addName()">Add</button>
+  <div id="nameList"></div>
+  <button onclick="startGame()">Start</button>
+</div>
+
+<script>
+  const nameInput = document.getElementById('nameInput');
+  const nameList = document.getElementById('nameList');
+  const setupDiv = document.getElementById('setup');
+  let names = [];
+
+  function addName() {
+    const name = nameInput.value.trim();
+    if (!name) return;
+    names.push(name);
+    nameInput.value = '';
+    renderList();
+  }
+
+  function renderList() {
+    nameList.innerHTML = '';
+    names.forEach((name, i) => {
+      const item = document.createElement('div');
+      item.textContent = name;
+      const up = document.createElement('button');
+      up.textContent = '↑';
+      up.onclick = () => {
+        if (i > 0) [names[i - 1], names[i]] = [names[i], names[i - 1]];
+        renderList();
+      };
+      const down = document.createElement('button');
+      down.textContent = '↓';
+      down.onclick = () => {
+        if (i < names.length - 1) [names[i + 1], names[i]] = [names[i], names[i + 1]];
+        renderList();
+      };
+      item.appendChild(up);
+      item.appendChild(down);
+      nameList.appendChild(item);
+    });
+  }
+
+  function startGame() {
+    if (names.length === 0) return;
+    setupDiv.remove();
+    let current = 0;
+
+    const button = document.createElement('button');
+    button.id = 'bigButton';
+    button.textContent = names[current];
+    speak(names[current]);
+    button.onclick = () => {
+      current = (current + 1) % names.length;
+      button.textContent = names[current];
+      speak(names[current]);
+    };
+    document.body.appendChild(button);
+  }
+
+  function speak(text) {
+    if ('speechSynthesis' in window) {
+      const utter = new SpeechSynthesisUtterance(text);
+      speechSynthesis.cancel(); // stop previous
+      speechSynthesis.speak(utter);
+    }
+  }
+</script>
+
+</body>
+</html>
