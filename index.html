@@ -80,11 +80,11 @@
   }
 
   function speak(text) {
-    if ('speechSynthesis' in window) {
+    //if ('speechSynthesis' in window) {
       const utter = new SpeechSynthesisUtterance(text);
       speechSynthesis.cancel(); // stop previous
       speechSynthesis.speak(utter);
-    }
+    //}
   }
 </script>
 
