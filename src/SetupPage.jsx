@@ -33,8 +33,10 @@ export default function SetupPage({names, setNames, setRunning, blinkInterval, s
             ))}
             </div>
             <span class="col">
-                <input id="nameInput" value={nameInput} onInput={e => setNameInput(e.target.value)} placeholder="Enter name"/>
-                <button onclick={addName}>Add</button>
+                <form onSubmit={e => {e.preventDefault(); addName()}}>
+                    <input id="nameInput" value={nameInput} onInput={e => setNameInput(e.target.value)} placeholder="Enter name"/>
+                    <button type="submit">Add</button>
+                </form>
             </span>
             <button onclick={() => setRunning(names.length > 0)}>Start</button>
             <br/>
