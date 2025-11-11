@@ -1,7 +1,7 @@
 {
   "name": "turn-tracker",
   "private": true,
-  "homepage": "https://smartycope.org/turn-tracker",
+  "homepage": "http://smartycope.org/turn-tracker",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

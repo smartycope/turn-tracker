@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks'
 import SetupPage from './SetupPage.jsx'
-import './app.css'
 import RunnerPage from './RunnerPage.jsx';
+import './app.css'
 
 
 export default function App() {
